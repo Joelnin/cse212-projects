@@ -80,14 +80,14 @@ public static class Arrays
         // >>> Third list: Merge values.
 
         // > Second Ideas:
-        // >> Copy after the amount.
+        // >> Copy before the amount.
         // >> Erase before de amount.
         // >> Add the values to the data list from the copied list.
 
         // > Action plan:
-        // >> Create a list with the numbers after the amount (inclusive).
-        // >> Creatre a list with the number before the amount (non-inclusive).
-        // >> Create a list with both list.
+        // >> Copy the numbers on the "data" list that are before the "amount" on a new list.
+        // >> Erase the numbers on the "data" list that are before before the "amount".
+        // >> Add each element from the new list to the "data" list.
 
         List<int> firstSectionList = new List<int>(data.GetRange(0, data.Count - amount));
 
