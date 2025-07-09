@@ -89,13 +89,11 @@ public static class Arrays
         // >> Erase the numbers on the "data" list that are before before the "amount".
         // >> Add each element from the new list to the "data" list.
 
-        List<int> firstSectionList = new List<int>(data.GetRange(0, data.Count - amount));
+        List<int> firstSectionList = new List<int>(data.GetRange(0, data.Count - amount)); // Copy the elements before amount.
 
-        // List<int> secondSectionList = new List<int>(data.GetRange(0, amount));
+        data.RemoveRange(0, data.Count - amount); // Erase elements from firt index (0) to the "amount" index.
 
-        data.RemoveRange(0, data.Count - amount);
-
-        foreach (int number in firstSectionList)
+        foreach (int number in firstSectionList) // Add each element in the new list to the data list.
         {
             data.Add(number);
         }
