@@ -40,11 +40,18 @@ public class TakingTurnsQueue
         else
         {
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+            if (person.Turns <= 0) // Should get infinite turns if it's less than or equals to 0. Not just take into account if it's more than 1.
+            {
+                _people.Enqueue(person);
+            }
+
+            else if (person.Turns > 1) // If it's more than 1, then enqueue again 
             {
                 person.Turns -= 1;
                 _people.Enqueue(person);
             }
+
+            // If it's just one, then just substract de last client.
 
             return person;
         }
