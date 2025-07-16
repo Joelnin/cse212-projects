@@ -55,5 +55,38 @@ public class PriorityQueueTests
         // Assert.Fail("Implement the test case and then remove this.");
     }
 
+    [TestMethod]
+    // Scenario: Queue is empty.
+    // Expected Result: Exception should be thrown with appropriate error message.
+    // Defect(s) Found: None.
+    public void TestPriorityQueue_3()
+    {
+        var priorityQueue = new PriorityQueue();
+        
+
+        try
+        {
+            priorityQueue.Dequeue();
+            Assert.Fail("Exception should have been thrown.");
+        }
+        catch (InvalidOperationException e)
+        {
+            Assert.AreEqual("The queue is empty.", e.Message);
+        }
+        catch (AssertFailedException)
+        {
+            throw;
+        }
+        catch (Exception e)
+        {
+            Assert.Fail(
+                 string.Format("Unexpected exception of type {0} caught: {1}",
+                                e.GetType(), e.Message)
+            );
+        }
+        
+        // Assert.Fail("Implement the test case and then remove this.");
+    }
+
     // Add more test cases as needed below.
 }
