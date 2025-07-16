@@ -33,24 +33,24 @@ public class PriorityQueueTests
     }
 
     [TestMethod]
-    // Scenario: Enqueue every person (3) with the same priority.
-    // Expected Result: The dequeue should be in the same order as they were enqueued.
+    // Scenario: Enqueue 2 items with the same priority (2), and a third with another one.
+    // Expected Result: The dequeue should be in the same order as they were enqueued for tim and Joe, bruce must be last. Ex: Tim, Joe, Bruce.
     // Defect(s) Found: After fixing the "Dequeue" funciton, it worked.
     public void TestPriorityQueue_2()
     {
         var priorityQueue = new PriorityQueue();
 
-        priorityQueue.Enqueue("Tim", 4);
+        priorityQueue.Enqueue("Tim", 2);
         priorityQueue.Enqueue("Bruce", 4);
-        priorityQueue.Enqueue("Joe", 4);
+        priorityQueue.Enqueue("Joe", 2);
 
         var first = priorityQueue.Dequeue();
         var second = priorityQueue.Dequeue();
         var third = priorityQueue.Dequeue();
 
         Assert.AreEqual("Tim", first);
-        Assert.AreEqual("Bruce", second);
-        Assert.AreEqual("Joe", third);
+        Assert.AreEqual("Joe", second);
+        Assert.AreEqual("Bruce", third);
 
         // Assert.Fail("Implement the test case and then remove this.");
     }
@@ -62,7 +62,6 @@ public class PriorityQueueTests
     public void TestPriorityQueue_3()
     {
         var priorityQueue = new PriorityQueue();
-        
 
         try
         {
