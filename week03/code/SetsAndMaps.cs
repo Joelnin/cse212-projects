@@ -22,7 +22,38 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+
+        // Create a set for the words after seeing them the first time.
+        var wordsSeen = new HashSet<string>();
+        
+        // Create a list for the pairs found.
+        var pairs = new List<string>();
+        
+        // Go through each word in the array words.
+        foreach (string word in words)
+        {
+            // First check if both letter in the word are the same. aa is not acceptable.
+            if (word[0] != word[1])
+            {
+                // Get the palindrome of this word. Switch both letters.
+                string reversedWord = String.Concat(word[1], word[0]);
+
+                // Check if this reversed word is in the new set of words we've seen.
+                if (wordsSeen.Contains(reversedWord))
+                {
+                    // If found, add it to the list of pairs.
+                    pairs.Add($"{reversedWord} & {word}");
+                }
+
+                // If the reversed word is not in the new set. Add the original word (not reversed) so it can be compared again later.
+                else
+                {
+                    wordsSeen.Add(word);
+                }
+            }
+        }
+
+        return pairs.ToArray(); // Return the list of pairs as an array of strings-.
     }
 
     /// <summary>
@@ -39,10 +70,28 @@ public static class SetsAndMaps
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
         var degrees = new Dictionary<string, int>();
+
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+
+            string degreeName = fields[3];
+
+            // If the degree is not in our summary yet, add it
+            if (!degrees.ContainsKey(degreeName))
+            {
+                // The key is the degree name since we want to summarize how many degrees are there. Since it's the first time this degree appears. Set the value to 1.
+                degrees[degreeName] = 1;
+            }
+
+            // If the degree is in our sumary, then update the value
+            else
+            {
+                // Add 1 for each duplicate
+                degrees[degreeName] += 1;
+            }
+
         }
 
         return degrees;
@@ -67,7 +116,61 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+
+        // Each pair of words is an anagram until proven otherwise.
+        bool decision = true;
+
+        // Remove spaces and convert the string to lowercase
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        // First: the lengths of the words 1 and 2 should match.
+        if (word1.Length != word2.Length)
+        {
+            decision = false;
+        }
+
+        // Create a dictionary for letter's counts in word1
+        var letterCount = new Dictionary<char, int>();
+
+        foreach (char letter in word1)
+        {
+            if (letterCount.ContainsKey(letter))
+            {
+                // If the letter is in the dictionary, add 1.
+                letterCount[letter] += 1;
+            }
+
+            else
+            {
+                // If the letter is not yet in the dictionary, set the value to 1.
+                letterCount[letter] = 1;                
+            }
+        }
+
+        // Start to count the letters in word2, to subtract them to the dictionary in word1
+        foreach (char letter in word2)
+        {
+            if (letterCount.ContainsKey(letter))
+            { 
+                // If the word1 has the letter, then subtract 1 of the letters count.
+                letterCount[letter] -= 1;
+
+                // If that letter's count gets to less than zero, it means there's more of this letter in word2 than in word1. They're not anagrams.
+                if (letterCount[letter] < 0)
+                {
+                    decision = false;
+                }
+            }
+
+            // If this letter in word2 is not in word1. They're not anagrams.
+            else
+            {
+                decision = false;
+            }
+        }
+
+        return decision;
     }
 
     /// <summary>
@@ -101,6 +204,49 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+
+        // Create a list to return it later with the earthquakes' info.
+        var earthquakeDescrip = new List<string>();
+        
+        // Go through every feature in the features to find place (Place) and magnitud (Mag).
+        foreach (var feature in featureCollection.Features)
+        {
+            string place;
+
+            // Check if the place has a value different from null.
+            if (feature.Properties.Place != null)
+            {
+                place = feature.Properties.Place;
+            }
+
+            // If the place is "null", then it is an Unknown location.
+            else
+            {
+                place = "Unknown location";
+            }
+
+            string magnitude;
+            
+            // Check if magnitude (Mag) has a value.
+            if (feature.Properties.Mag.HasValue)
+            {
+
+                // magnitude = feature.Properties.Mag.Value.ToString("0.00"); // Doesn't need formatting.
+                magnitude = feature.Properties.Mag.Value.ToString(); // Use the value as a string.
+            }
+
+            // If it doesn't have a value, then set the magnitud to N/A.
+            else
+            {
+                magnitude = "N/A";
+            }
+
+            earthquakeDescrip.Add($"{place} - Mag {magnitude}"); // Adding the earthquake description info to the list with the correct format.
+
+            // Format: 1km NE of Pahala, Hawaii - Mag 2.36
+
+        }
+
+        return earthquakeDescrip.ToArray(); // Return the list as an array of strings.
     }
 }

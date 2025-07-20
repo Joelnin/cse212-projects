@@ -33,6 +33,32 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+
+
+        var key = (_currX, _currY);
+        bool[] bools = [];
+
+        if (_mazeMap.ContainsKey(key))
+        {
+            bools = _mazeMap[key];
+
+            if (bools[0])
+            {
+                // If it's valid, then move left. Subtract from current x value.
+                _currX -= 1;
+            }
+
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
     }
 
     /// <summary>
@@ -42,6 +68,31 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+
+        var key = (_currX, _currY);
+        bool[] bools = [];
+
+        if (_mazeMap.ContainsKey(key))
+        {
+            bools = _mazeMap[key];
+
+            if (bools[1])
+            {
+                // If it's valid, then move right. Add to current x value.
+                _currX += 1;
+            }
+
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
     }
 
     /// <summary>
@@ -51,6 +102,30 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+
+        var key = (_currX, _currY);
+        bool[] bools = [];
+
+        if (_mazeMap.ContainsKey(key))
+        {
+            bools = _mazeMap[key];
+
+            if (bools[2])
+            {
+                // If it's valid, then move left. Subtract from current y value.
+                _currY -= 1;
+            }
+
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -60,6 +135,30 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+
+        var key = (_currX, _currY);
+        bool[] bools = [];
+
+        if (_mazeMap.ContainsKey(key))
+        {
+            bools = _mazeMap[key];
+
+            if (bools[3])
+            {
+                // If it's valid, then move left. Add to current y value.
+                _currY += 1;
+            }
+
+            else
+            {
+                throw new InvalidOperationException("Can't go that way!");
+            }
+        }
+        
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     public string GetStatus()
