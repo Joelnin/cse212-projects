@@ -13,7 +13,12 @@ public class Node
     {
         // TODO Start Problem 1
 
-        if (value < Data)
+        if (value == Data) // If you got the value already in the data. Stop this iteration.
+        {
+            return;
+        }
+
+        else if (value < Data)
         {
             // Insert to the left
             if (Left is null)
@@ -21,6 +26,7 @@ public class Node
             else
                 Left.Insert(value);
         }
+
         else
         {
             // Insert to the right
@@ -34,12 +40,73 @@ public class Node
     public bool Contains(int value)
     {
         // TODO Start Problem 2
-        return false;
+
+        if (value == Data)
+        {
+            return true;
+        }
+
+        else if (value < Data)
+        {
+            // Insert to the left
+            if (Left is null)
+            {
+                return false;
+            }
+
+            return Left.Contains(value);
+        }
+
+        else
+        {
+            if (Right is null)
+            {
+                return false;
+            }
+
+            return Right.Contains(value);
+        }
     }
 
     public int GetHeight()
     {
         // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+
+        // Base case: Check if both of the children are null. If so, then there's just the current node, so height is 1. Note: this should be a leaf then.
+        if (Left == null && Right == null)
+        {
+            return 1;
+        }
+
+        // Get the height of the left subtree.
+        int leftSubTreeHeight;
+
+        if (Left is not null) // if left exist, then get the heigh by recursive.
+        {
+            leftSubTreeHeight = Left.GetHeight();
+        }
+
+        else // If Left doesn't exist, then it is 0.
+        {
+            leftSubTreeHeight = 0;
+        }
+
+        // Get the height of the right subtree.
+        int rightSubTreeHeight;
+
+        if (Right is not null) // if Right exist, then get the heigh by recursive.
+        {
+            rightSubTreeHeight = Right.GetHeight();
+        }
+
+        else // If Right doesn't exist, then it is 0.
+        {
+            rightSubTreeHeight = 0;
+        }
+
+        // The tree's height is 1 + the greater height of the two subtrees. Note: That 1 is the root (or pseudo-root when speaking of the bottom branches).
+        int treeHeight = 1 + Math.Max(leftSubTreeHeight, rightSubTreeHeight);
+
+        return treeHeight; 
     }
 }

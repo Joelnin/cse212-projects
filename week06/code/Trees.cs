@@ -49,5 +49,30 @@ public static class Trees
     private static void InsertMiddle(int[] sortedNumbers, int first, int last, BinarySearchTree bst)
     {
         // TODO Start Problem 5
+
+        // On the recursive, the index that gets the last (in case of working with the left side) or first (in case of working with the right side) is an equation (middle +- 1) so, if the first index is greater than the last one, it means two cases:
+        // >> last = middle - 1 (which is last for the left side) is less than first. 
+        // >> first = middle + 1 (which is first fort the right side) is greater than last.
+        // Both cases: stop, there're no more indexes, you passed a leaf.
+        if (first > last)
+        {
+            return;
+        }
+
+        // The middle value is in a spot on the half of the sum of the first value and the last index. This keeps it simple to find the middle one. (This is also known as midpoint).
+        int middleIndex = (first + last) / 2;
+
+        // So the middle value is the one on the middle index.
+        var middleValue = sortedNumbers[middleIndex];
+
+
+        // Insert in the tree.
+        bst.Insert(middleValue);
+
+        // At this point there's still more than one index (allegedly). So recurse to the left half of the list (menus 1 index, this index is the "parent" one).
+        InsertMiddle(sortedNumbers, first, middleIndex - 1, bst);
+
+        // Finally, recurse to the right half to finalize the tree (plus 1 index, this index is the "parent" one).
+        InsertMiddle(sortedNumbers, middleIndex + 1, last, bst);
     }
 }
